@@ -1,0 +1,50 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Sep 12 22:02:33 2018
+
+@author: cruelrain
+"""
+#encoding=utf-8
+import jieba
+filename = "E:/竞赛/汽车用户/data/r.csv"
+stopwords_file = "E:/竞赛/汽车用户/stop_words2.txt"
+
+stop_f = open(stopwords_file,"r",encoding='utf-8')
+stop_words = list()
+for line in stop_f.readlines():
+    line = line.strip()
+    if not len(line):
+        continue
+
+    stop_words.append(line)
+stop_f.close
+
+print(len(stop_words))
+
+f = open(filename,"r",encoding='utf-8')
+result = list()
+for line in f.readlines():
+    line = line.strip()
+    if not len(line):
+        continue
+    outstr = '' 
+    seg_list = jieba.cut(line,cut_all=False) 
+    for word in seg_list:  
+        if word not in stop_words:  
+            if word != '\t':  
+                outstr += word 
+                outstr += " "  
+   # seg_list = " ".join(seg_list)
+    result.append(outstr.strip())
+f.close
+
+with open("E:/竞赛/汽车用户/data/result.txt","w",encoding='utf-8') as fw:
+    for sentence in result:
+        sentence.encode('utf-8')
+        data=sentence.strip()  
+        if len(data)!=0:  
+            fw.write(data)
+            fw.write("\n") 
+
+
+print ("end")
