@@ -1,0 +1,41 @@
+
+'''
+subject
+0 价格
+1 配置
+2 操控
+3 舒适性
+4 油耗
+5 动力
+6 内饰
+7 安全性
+8 空间
+9 外观
+'''
+import pandas as pd
+test = pd.read_csv('1.csv')
+#print("test", test)
+
+def change(x):
+	if x == 0:
+	   return '价格'
+	if x == 1:
+		return '配置'
+	if x == 2:
+		return '操控'
+	if x == 3:
+		return '舒适性'
+	if x == 4:
+		return '油耗'
+	if x == 5:
+		return '动力'
+	if x == 6:
+		return '内饰'
+	if x == 7:
+		return '安全性'
+	if x == 8:
+		return '空间'
+	if x == 9:
+		return '外观'
+test['subject'] = test['subject'].apply(lambda x : change(x))
+test.to_csv('2.csv',index=False, encoding='utf-8')
