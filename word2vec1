@@ -1,0 +1,25 @@
+from gensim.models import Word2Vec
+import logging
+
+model_file = 'med200.model.bin'
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+
+def read_word(filename):
+	sentences = []
+	with open(filename, 'r',encoding='utf-8') as rf:
+		for line in rf.readlines():
+			line = line.replace('\n', '')
+			words = line.split()
+			sentences.append(words)
+	return sentences
+
+def train(sentences):
+	model = Word2Vec(sentences, sg=1, size=200,  window=5,  min_count=5,  negative=8, sample=0.001, hs=0, workers=4)
+	model.save(model_file)
+	model.wv.save_word2vec_format(model_file.replace('.bin', '.txt'), binary = False)
+
+if  __name__ == '__main__':
+	print ('training...')
+	sentences = read_word(filename = 'data/result.txt')
+	train(sentences)
+	print ('training done...')
